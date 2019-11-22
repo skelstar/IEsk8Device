@@ -12,11 +12,13 @@ public:
   virtual void setOnConnectedEvent(callBack ptr_onConnectedEvent);
   virtual void setOnDisconnectedEvent(callBack ptr_onDisconnectedEvent);
   virtual void setOnNotifyEvent(callBack ptr_onNotifyEvent);
+  virtual void setOnSentEvent(callBack ptr_onSentEvent);
 
 // protected:
   
   callBack _onConnectedEvent;
   callBack _onDisconnectedEvent;
   callBack _onNotifyEvent;
+  callBack _onSentEvent;
 };
 
