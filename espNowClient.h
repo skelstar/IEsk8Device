@@ -1,6 +1,6 @@
-// #ifndef IEsk8Device
-// #include <IEsk8Device.h>
-// #endif
+#ifndef IEsk8Device
+#include <IEsk8Device.h>
+#endif
 #include <esp_now.h>
 #include <WiFi.h>
 
