@@ -40,7 +40,7 @@ class EspNowClient : public IEsk8Device
       _onSentEvent = ptr_onSentEvent;
     }
 
-    uint8_t *espData;
+    uint8_t espData;
 
   private:
   };
@@ -49,11 +49,40 @@ class EspNowClient : public IEsk8Device
   #ifndef espnowClient
   EspNowClient client;
   #endif
+  
+  // esp_now_peer_info_t peer;
 
   void configDeviceAP();
 
+  esp_now_peer_info_t peer;
+
+  void addPeer(const uint8_t *mac_addr) {
+      
+    Serial.printf("Peer does not exist!\n");
+    peer.channel = CHANNEL;
+    peer.encrypt = 0;
+    peer.ifidx = ESP_IF_WIFI_AP;
+    int status = esp_now_add_peer(&peer);
+    switch(status) {
+      case 0:
+        Serial.printf("Added!\n");
+        break;
+      default:
+        Serial.printf("Added ERROR!\n");
+    }
+  }
+
   void onDataRecv(const uint8_t *mac_addr, const uint8_t *data, int data_len) {
-    espData = data;
+    for (int i=0; i<6; i++) {
+      peer.peer_addr[i] = (uint8_t) mac_addr[i];
+    }
+
+    if (!esp_now_is_peer_exist(mac_addr)) {
+      addPeer(mac_addr);
+    }
+
+    memcpy(&client.espData, data, sizeof(client.espData));
+
     client._onNotifyEvent();
   }
   // callback when data is sent from Master to Slave
