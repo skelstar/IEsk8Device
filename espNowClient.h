@@ -32,7 +32,7 @@ class EspNowClient : public IEsk8Device
     {
       _onDisconnectedEvent = ptr_onDisconnectedEvent;
     }
-    void setOnNotifyEvent(callBack ptr_onNotifyEvent)
+    void setOnNotifyEvent(notifyCallBack ptr_onNotifyEvent)
     {
       _onNotifyEvent = ptr_onNotifyEvent;
     }
