@@ -83,7 +83,7 @@ class EspNowClient : public IEsk8Device
 
     memcpy(&client.espData, data, sizeof(client.espData));
 
-    client._onNotifyEvent();
+    client._onNotifyEvent(data, data_len);
   }
   // callback when data is sent from Master to Slave
   void onDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
