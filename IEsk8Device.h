@@ -9,6 +9,7 @@ public:
 
   virtual void initialise();
   virtual void connect() = 0;
+  virtual void update();
 
   virtual void setOnConnectedEvent(callBack ptr_onConnectedEvent);
   virtual void setOnDisconnectedEvent(callBack ptr_onDisconnectedEvent);
