@@ -18,11 +18,6 @@ public:
   {
   }
 
-  void initialise()
-  {
-    initESPNow();
-  }
-
   void connect()
   {
   }
