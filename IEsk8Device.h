@@ -7,7 +7,6 @@ public:
   typedef void (*callBack)();
   typedef void (*notifyCallBack)(const uint8_t *data, uint8_t data_len);
 
-  virtual void initialise();
   virtual void connect() = 0;
   virtual void update();
 
