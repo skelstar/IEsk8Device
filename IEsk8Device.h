@@ -5,10 +5,9 @@ class IEsk8Device
 
 public:
   typedef void (*callBack)();
-  typedef void (*notifyCallBack)(const uint8_t *data, uint8_t data_len);
+  typedef void (*notifyCallBack)(void *data, uint8_t data_len);
 
   virtual void connect() = 0;
-  virtual void update();
 
   virtual void setOnConnectedEvent(callBack ptr_onConnectedEvent);
   virtual void setOnDisconnectedEvent(callBack ptr_onDisconnectedEvent);
