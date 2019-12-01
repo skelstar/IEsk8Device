@@ -18,7 +18,7 @@ public:
   {
   }
 
-  void connect()
+  void update()
   {
   }
 

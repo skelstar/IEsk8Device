@@ -14,14 +14,6 @@ public:
   {
   }
 
-  void initialise()
-  {
-  }
-
-  void connect()
-  {
-  }
-
   void update() 
   {
     nrf24.update();

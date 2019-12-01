@@ -7,7 +7,7 @@ public:
   typedef void (*callBack)();
   typedef void (*notifyCallBack)(void *data, uint8_t data_len);
 
-  virtual void connect() = 0;
+  virtual void update() = 0;
 
   virtual void setOnConnectedEvent(callBack ptr_onConnectedEvent);
   virtual void setOnDisconnectedEvent(callBack ptr_onDisconnectedEvent);
