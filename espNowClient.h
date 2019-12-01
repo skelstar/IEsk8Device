@@ -18,9 +18,11 @@ public:
   {
   }
 
-  void update()
+  void connect()
   {
   }
+
+  void update() {}
 
   void sendPacket(uint8_t *data, int data_len)
   {
@@ -70,6 +72,7 @@ void addPeer(const uint8_t *mac_addr)
     Serial.printf("Added ERROR!\n");
   }
 }
+
 #define DELETEBEFOREPAIR 0
 
 bool printStatus(esp_err_t status)
@@ -240,20 +243,38 @@ void onDataSent(const uint8_t *mac_addr, esp_now_send_status_t status)
 }
 
 // Init ESP Now with fallback
-void initESPNow()
+void initESPNow(bool master)
 {
-  WiFi.mode(WIFI_AP);
-  configDeviceAP();
-  WiFi.disconnect();
-  if (esp_now_init() == ESP_OK)
+  if (master)
   {
-    client._onConnectedEvent();
+    WiFi.disconnect();
+    if (esp_now_init() == ESP_OK)
+    {
+      Serial.println("ESPNow Init Success");
+    }
+    else
+    {
+      Serial.println("ESPNow Init Failed");
+      // Retry InitESPNow, add a counte and then restart?
+      // InitESPNow();
+      // or Simply Restart
+      //ESP.restart();
+    }
   }
   else
   {
-    client._onDisconnectedEvent();
+    WiFi.mode(WIFI_AP);
+    configDeviceAP();
+    WiFi.disconnect();
+    if (esp_now_init() == ESP_OK)
+    {
+      client._onConnectedEvent();
+    }
+    else
+    {
+      client._onDisconnectedEvent();
+    }
   }
-
   esp_now_register_recv_cb(onDataRecv);
   esp_now_register_send_cb(onDataSent);
 }
