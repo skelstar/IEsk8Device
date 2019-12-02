@@ -6,10 +6,13 @@
 
 #define CHANNEL 1
 
+// prototypes
 void initESPNow();
-
-esp_now_peer_info_t peer;
 bool printStatus(esp_err_t status);
+
+// variables
+esp_now_peer_info_t peer;
+
 
 class EspNowClient : public IEsk8Device
 {
@@ -243,38 +246,22 @@ void onDataSent(const uint8_t *mac_addr, esp_now_send_status_t status)
 }
 
 // Init ESP Now with fallback
-void initESPNow(bool master)
+void initESPNow()
 {
-  if (master)
+  WiFi.mode(WIFI_MODE_APSTA);
+  configDeviceAP();
+  WiFi.disconnect();
+  if (esp_now_init() == ESP_OK)
   {
-    WiFi.mode(WIFI_STA);
-    WiFi.disconnect();
-    if (esp_now_init() == ESP_OK)
-    {
-      Serial.println("ESPNow Init Success");
-    }
-    else
-    {
-      Serial.println("ESPNow Init Failed");
-      // Retry InitESPNow, add a counte and then restart?
-      // InitESPNow();
-      // or Simply Restart
-      //ESP.restart();
-    }
+    Serial.println("ESPNow Init Success");
   }
   else
   {
-    WiFi.mode(WIFI_AP);
-    configDeviceAP();
-    WiFi.disconnect();
-    if (esp_now_init() == ESP_OK)
-    {
-      client._onConnectedEvent();
-    }
-    else
-    {
-      client._onDisconnectedEvent();
-    }
+    Serial.println("ESPNow Init Failed");
+    // Retry InitESPNow, add a counte and then restart?
+    // InitESPNow();
+    // or Simply Restart
+    //ESP.restart();
   }
   esp_now_register_recv_cb(onDataRecv);
   esp_now_register_send_cb(onDataSent);
