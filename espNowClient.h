@@ -75,12 +75,14 @@ void addPeer(const uint8_t *mac_addr)
 
 #define DELETEBEFOREPAIR 0
 
-bool printStatus(esp_err_t status)
+bool printStatus(esp_err_t status, bool printSuccess)
 {
   if (status == ESP_OK)
   {
-    // Pair success
-    Serial.println("Success");
+    if (printSuccess)
+    {
+      Serial.println("Success");
+    }
     return true;
   }
   else if (status == ESP_ERR_ESPNOW_NOT_INIT)
