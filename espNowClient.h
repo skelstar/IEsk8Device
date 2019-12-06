@@ -8,7 +8,7 @@
 
 // prototypes
 void initESPNow();
-bool printStatus(esp_err_t status);
+bool printStatus(esp_err_t status, bool printSuccess);
 
 // variables
 esp_now_peer_info_t peer;
@@ -125,7 +125,7 @@ void deletePeer()
 {
   esp_err_t delStatus = esp_now_del_peer(peer.peer_addr);
   Serial.print("Slave Delete Status: ");
-  printStatus(delStatus);
+  printStatus(delStatus, false);
 }
 
 // Check if the slave is already paired with the master.
@@ -152,7 +152,7 @@ bool pairPeer()
     {
       // Slave not paired, attempt pair
       esp_err_t addStatus = esp_now_add_peer(&peer);
-      return printStatus(addStatus);
+      return printStatus(addStatus, false);
     }
   }
   else
